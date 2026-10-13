@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}Students · AttendAI{% endblock %}{% block crumb %}Students{% endblock %}
+{% block content %}
+<section class="page-heading"><div><h1>Students</h1><p>Manage your registered students.</p></div></section>
+<section class="panel"><div class="panel-title"><div><h3>Add a student</h3><p>Fields marked * are required.</p></div></div>
+<form id="student-form" class="form-grid">
+<label>Student ID *<input name="student_code" placeholder="e.g. STU001" required></label>
+<label>Full name *<input name="full_name" placeholder="Student full name" required></label>
+<label>Email<input name="email" type="email" placeholder="student@example.com"></label>
+<label>Department *<input name="department" placeholder="e.g. Computer Science" required></label>
+<label>Class / Year *<input name="class_name" placeholder="e.g. 3rd Year" required></label>
+<div class="form-action"><button class="btn btn-primary" type="submit">＋ Add Student</button></div>
+</form><p id="student-message" class="form-message" role="status"></p></section>
+<section class="panel table-panel"><div class="panel-title"><div><h3>Registered Students</h3><p>{{ students|length }} students</p></div><input class="search" id="student-search" placeholder="Search students…"></div>
+<div class="table-wrap"><table id="students-table"><thead><tr><th>Student ID</th><th>Name</th><th>Email</th><th>Department</th><th>Class</th></tr></thead><tbody>
+{% for s in students %}<tr><td>{{ s.student_code }}</td><td><b>{{ s.full_name }}</b></td><td>{{ s.email or '—' }}</td><td>{{ s.department }}</td><td>{{ s.class_name }}</td></tr>
+{% else %}<tr><td colspan="5" class="empty">No students registered yet.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/students.js') }}"></script>{% endblock %}

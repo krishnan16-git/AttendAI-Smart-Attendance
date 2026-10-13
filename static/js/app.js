@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-dismiss]').forEach(el=>el.addEventListener('click',()=>el.remove()));

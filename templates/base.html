@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}AttendAI{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head><body>
+<aside class="sidebar">
+  <div class="brand">🎓 <span>Attend<span class="accent">AI</span></span></div>
+  <p class="side-caption">SMART ATTENDANCE</p>
+  <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">▦ Dashboard</a>
+  <a href="{{ url_for('students_page') }}" class="{% if request.endpoint == 'students_page' %}active{% endif %}">♙ Students</a>
+  <a href="{{ url_for('face_page') }}" class="{% if request.endpoint == 'face_page' %}active{% endif %}">◎ Face Recognition</a>
+  <a href="{{ url_for('reports') }}" class="{% if request.endpoint == 'reports' %}active{% endif %}">▤ Reports</a>
+  <div class="side-bottom">Secure · Fast · Reliable</div>
+</aside>
+<main class="main">
+<header class="topbar"><div><span class="muted">AttendAI / </span>{% block crumb %}Dashboard{% endblock %}</div><div class="admin">● Admin</div></header>
+{% with messages = get_flashed_messages() %}{% if messages %}<div class="notice">{{ messages[0] }}</div>{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+<footer>AttendAI · Smart Attendance System Using Face Recognition</footer>
+</main>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body></html>

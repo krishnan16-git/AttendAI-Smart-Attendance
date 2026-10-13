@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}Face Recognition · AttendAI{% endblock %}{% block crumb %}Face Recognition{% endblock %}
+{% block content %}
+<section class="page-heading"><div><h1>Face Recognition Attendance</h1><p>Camera preview and attendance demo.</p></div><span class="pill">Camera permission required</span></section>
+<div class="notice warning">Learning demo: the camera preview below does not identify a person yet. The button records a clearly labelled <b>Manual Demo</b> attendance entry. Real face matching must be trained and tested before use.</div>
+<section class="two-col face-layout"><div class="panel"><div class="panel-title"><div><h3>Camera preview</h3><p>Allow browser access when prompted.</p></div><span id="camera-status" class="status">Camera off</span></div>
+<div class="camera-box"><video id="camera" autoplay playsinline></video><div id="camera-placeholder">◎<br><small>Camera preview appears here</small></div></div>
+<div class="button-row"><button class="btn btn-primary" id="start-camera">Start Camera</button><button class="btn btn-light" id="stop-camera" disabled>Stop Camera</button></div>
+<p id="camera-message" class="form-message" role="status"></p></div>
+<div class="panel"><div class="panel-title"><div><h3>Demo attendance</h3><p>Choose a student and record today's attendance.</p></div></div>
+<label class="field-label">Select student<select id="attendance-student"><option value="">Choose student…</option>{% for s in students %}<option value="{{ s.id }}">{{ s.student_code }} — {{ s.full_name }}</option>{% endfor %}</select></label>
+<button class="btn btn-primary full-btn" id="mark-attendance">✓ Mark Demo Attendance</button><p id="attendance-message" class="form-message" role="status"></p>
+<div class="info-box"><b>Next step: enable recognition</b><p>Capture a consented face image for each student, train a local face model, then connect model predictions to this endpoint. Never automatically mark attendance on an uncertain match.</p></div></div></section>
+<section class="panel table-panel"><div class="panel-title"><div><h3>Today's records</h3><p>Refresh after marking attendance.</p></div><button class="btn btn-light" id="refresh-attendance">↻ Refresh</button></div>
+<div class="table-wrap"><table><thead><tr><th>Name</th><th>Student ID</th><th>Time</th><th>Method</th><th>Status</th></tr></thead><tbody id="today-body"><tr><td colspan="5" class="empty">Loading records…</td></tr></tbody></table></div></section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/face.js') }}"></script>{% endblock %}

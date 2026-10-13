@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% block title %}Dashboard · AttendAI{% endblock %}{% block crumb %}Dashboard{% endblock %}
+{% block content %}
+<section class="page-heading"><div><h1>Dashboard</h1><p>Welcome back! Here's today's attendance overview.</p></div><span class="pill">{{ today.strftime('%d %b %Y') }}</span></section>
+<section class="stats">
+<div class="stat"><div class="stat-icon blue">♙</div><p>Total Students</p><h2>{{ total }}</h2><small>Registered students</small></div>
+<div class="stat"><div class="stat-icon green">✓</div><p>Present Today</p><h2>{{ present }}</h2><small>Marked present</small></div>
+<div class="stat"><div class="stat-icon red">◷</div><p>Not Marked</p><h2>{{ absent }}</h2><small>Remaining students</small></div>
+<div class="stat"><div class="stat-icon purple">％</div><p>Attendance Rate</p><h2>{{ attendance_rate }}%</h2><small>Today's attendance</small></div>
+</section>
+<section class="two-col">
+<div class="panel"><div class="panel-title"><div><h3>Quick Actions</h3><p>Common tasks to get started</p></div></div>
+<div class="quick-grid"><a class="quick-card" href="{{ url_for('students_page') }}"><span class="quick-icon">＋</span><b>Add Student</b><small>Register a student</small></a>
+<a class="quick-card" href="{{ url_for('face_page') }}"><span class="quick-icon">◎</span><b>Face Attendance</b><small>Open camera demo</small></a>
+<a class="quick-card" href="{{ url_for('reports') }}"><span class="quick-icon">▤</span><b>View Reports</b><small>Review attendance</small></a></div>
+</div>
+<div class="panel"><div class="panel-title"><div><h3>How it works</h3><p>Attendance workflow</p></div></div>
+<div class="step"><span>1</span><div><b>Register students</b><small>Add ID, name, department and class.</small></div></div>
+<div class="step"><span>2</span><div><b>Set up face data</b><small>Capture a consented face image for matching.</small></div></div>
+<div class="step"><span>3</span><div><b>Mark attendance</b><small>Review recognition before saving attendance.</small></div></div></div>
+</section>
+<section class="panel table-panel"><div class="panel-title"><div><h3>Recent Attendance</h3><p>Latest attendance records</p></div><a class="btn btn-light" href="{{ url_for('reports') }}">View all →</a></div>
+<div class="table-wrap"><table><thead><tr><th>Student</th><th>Student ID</th><th>Date</th><th>Time</th><th>Method</th><th>Status</th></tr></thead><tbody>
+{% for r in recent %}<tr><td><b>{{ r.student.full_name }}</b></td><td>{{ r.student.student_code }}</td><td>{{ r.attendance_date }}</td><td>{{ r.attendance_time.strftime('%H:%M:%S') }}</td><td>{{ r.method }}</td><td><span class="status present">{{ r.status }}</span></td></tr>
+{% else %}<tr><td colspan="6" class="empty">No attendance records yet. Add a student, then try the attendance demo.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}
